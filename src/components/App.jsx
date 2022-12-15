@@ -17,7 +17,21 @@ export class App extends React.Component {
     ],
     filter: '',
   };
+  componentDidUpdate() {
+    localStorage.setItem(
+      'phoneBookContacts',
+      JSON.stringify(this.state.contacts)
+    );
+  }
 
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem('phoneBookContacts'));
+    if (savedContacts) {
+      this.setState(prevState => ({
+        contacts: savedContacts,
+      }));
+    }
+  }
   saveContact = contact => {
     const contacts = this.state.contacts;
     const checkName = contacts
