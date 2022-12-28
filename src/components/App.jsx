@@ -17,11 +17,13 @@ export class App extends React.Component {
     ],
     filter: '',
   };
-  componentDidUpdate() {
-    localStorage.setItem(
-      'phoneBookContacts',
-      JSON.stringify(this.state.contacts)
-    );
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem(
+        'phoneBookContacts',
+        JSON.stringify(this.state.contacts)
+      );
+    }
   }
 
   componentDidMount() {
@@ -32,6 +34,7 @@ export class App extends React.Component {
       }));
     }
   }
+
   saveContact = contact => {
     const contacts = this.state.contacts;
     const checkName = contacts
